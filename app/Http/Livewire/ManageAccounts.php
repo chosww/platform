@@ -50,10 +50,13 @@ class ManageAccounts extends Component
             ->layout('layouts.app', ['bodyClass' => 'page', 'headerClass' => 'stack', 'pageWidth' => 'wide']);
     }
 
-    public function flash(string $message)
+    public function flash(string $message, ?string $interpretation = null)
     {
         $this->dispatchBrowserEvent('clear-flash-message');
         session()->flash('message', $message);
+        if (isset($interpretation)) {
+            session()->flash('message-interpretation', $interpretation);
+        }
         $this->dispatchBrowserEvent('add-flash-message');
     }
 
