@@ -1,18 +1,21 @@
 <div class="flex flex-wrap items-center justify-between gap-4">
     <h2>{{ __('Projects I am running') }}</h2>
-    @if (!$projectable->draftProjects->isEmpty() ||
-        !$projectable->inProgressProjects->isEmpty() ||
-        !$projectable->upcomingProjects->isEmpty() ||
-        !$projectable->completedProjects->isEmpty())
+    <x-interpretation name="{{ __('Projects I am running', [], 'en') }}" />
+    @if (
+        !$projectable->draftProjects->isEmpty() ||
+            !$projectable->inProgressProjects->isEmpty() ||
+            !$projectable->upcomingProjects->isEmpty() ||
+            !$projectable->completedProjects->isEmpty())
         <a class="cta"
             href="{{ $user->projectable->projects->count() > 0 ? localized_route('projects.show-context-selection') : localized_route('projects.show-language-selection') }}">{{ __('Create new project') }}</a>
     @endif
 </div>
 
-@if ($projectable->draftProjects->isEmpty() &&
-    $projectable->inProgressProjects->isEmpty() &&
-    $projectable->upcomingProjects->isEmpty() &&
-    $projectable->completedProjects->isEmpty())
+@if (
+    $projectable->draftProjects->isEmpty() &&
+        $projectable->inProgressProjects->isEmpty() &&
+        $projectable->upcomingProjects->isEmpty() &&
+        $projectable->completedProjects->isEmpty())
     <div class="box stack">
         <p>{{ __('It seems as though you have not created any projects yet.') }}</p>
 
@@ -26,6 +29,7 @@
 
 @if (!$projectable->draftProjects->isEmpty())
     <h3>{{ __('Draft') }}</h3>
+    <x-interpretation name="{{ __('Draft', [], 'en') }}" />
     @foreach ($projectable->draftProjects as $project)
         @include('projects.partials.project-and-engagements')
     @endforeach
@@ -33,13 +37,15 @@
 
 @if (!$projectable->inProgressProjects->isEmpty())
     <h3>{{ __('In progress') }}</h3>
+    <x-interpretation name="{{ __('In progress', [], 'en') }}" />
     @foreach ($projectable->inProgressProjects as $project)
         @include('projects.partials.project-and-engagements')
     @endforeach
 @endif
 
 @if (!$projectable->upcomingProjects->isEmpty())
-    <h3>{{ __('In progress') }}</h3>
+    <h3>{{ __('Upcoming') }}</h3>
+    <x-interpretation name="{{ __('Upcoming', [], 'en') }}" />
     @foreach ($projectable->upcomingProjects as $project)
         @include('projects.partials.project-and-engagements')
     @endforeach
@@ -47,6 +53,7 @@
 
 @if (!$projectable->completedProjects->isEmpty())
     <x-expander level="3" :summary="__('Completed')">
+        <x-interpretation name="{{ __('Completed', [], 'en') }}" />
         @forelse ($projectable->completedProjects as $project)
             @include('projects.partials.project-and-engagements')
         @empty

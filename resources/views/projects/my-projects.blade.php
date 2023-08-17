@@ -9,19 +9,22 @@
                 <a class="cta secondary"
                     href="{{ localized_route('projects.all-projects') }}">{{ __('Browse all projects') }}</a>
             </div>
+            <x-interpretation name="{{ __('Projects', [], 'en') }}" />
         </div>
     </x-slot>
-    @if (($user->context === \App\Enums\UserContext::Organization->value &&
-        ($user->organization->isConsultant() ||
-            $user->organization->isConnector() ||
-            $user->organization->isParticipant())) ||
-        ($user->context === \App\Enums\UserContext::Individual->value &&
-            ($user->individual->isConsultant() || $user->individual->isConnector()) &&
-            ($user->individual->isParticipant() || $user->individual->inProgressParticipatingProjects()->count())))
-        @if ($user->context === \App\Enums\UserContext::Organization->value ||
-            ($user->context === \App\Enums\UserContext::Individual->value && count($user->individual?->roles ?? []) > 1) ||
-            ($user->individual?->inProgressContractedProjects()->count() &&
-                $user->individual?->inProgressParticipatingProjects()->count()))
+    @if (
+        ($user->context === \App\Enums\UserContext::Organization->value &&
+            ($user->organization->isConsultant() ||
+                $user->organization->isConnector() ||
+                $user->organization->isParticipant())) ||
+            ($user->context === \App\Enums\UserContext::Individual->value &&
+                ($user->individual->isConsultant() || $user->individual->isConnector()) &&
+                ($user->individual->isParticipant() || $user->individual->inProgressParticipatingProjects()->count())))
+        @if (
+            $user->context === \App\Enums\UserContext::Organization->value ||
+                ($user->context === \App\Enums\UserContext::Individual->value && count($user->individual?->roles ?? []) > 1) ||
+                ($user->individual?->inProgressContractedProjects()->count() &&
+                    $user->individual?->inProgressParticipatingProjects()->count()))
             <nav class="nav--tabbed" aria-labelledby="projects">
                 <div class="center center:wide">
                     <ul class="-mt-4 flex gap-6" role="list">
@@ -95,6 +98,7 @@
     <div class="full accent--color -mb-8 mt-12 py-12">
         <div class="center center:wide stack text-center">
             <h2>{{ __('Browse all projects') }}</h2>
+            <x-interpretation name="{{ __('Browse all projects', [], 'en') }}" />
             <p>{{ __('This includes projects by Regulated Organizations and Community Organizations.') }}</p>
             <p class="mt-8"><a class="cta"
                     href="{{ localized_route('projects.all-projects') }}">{{ __('Browse all projects') }}</a>
